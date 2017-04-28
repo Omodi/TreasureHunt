@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-public class ShowHighscoreActivity extends AppCompatActivity {
+public class ShowHighScoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class ShowHighscoreActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            Intent mainActivityIntent = new Intent(ShowHighscoreActivity.this, MainActivity.class);
+            Intent mainActivityIntent = new Intent(ShowHighScoreActivity.this, MainActivity.class);
             startActivity(mainActivityIntent);
             Log.d("ShowHighScoreActivity", "Going to MainActivity");
             finish();
