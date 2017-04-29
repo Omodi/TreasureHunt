@@ -2,6 +2,7 @@ package com.rit.se.treasurehuntvuz;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -99,11 +100,26 @@ public class ShowFilesActivity extends ListActivity {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
-                line = br.readLine();
-                Toast.makeText(this, "Info in File: "+line, Toast.LENGTH_SHORT).show();
+                Location newLoc;
+                String[] place;
+                boolean start = false;
+                while((line = br.readLine()) != null){
+                    place = line.split(",");
+                    if(place.length == 2) {
+                        newLoc = new Location("");
+                        newLoc.setLongitude(Double.parseDouble(place[0]));
+                        newLoc.setLatitude(Double.parseDouble(place[1]));
+                        TreasuresSingleton.getTreasures().addTreasure(newLoc);
+                        start = true;
+                    }
+                }
 
-                /*Intent fileActivityIntent = new Intent(ShowFilesActivity.this, FindTreasureActivity.class);
-                startActivity(fileActivityIntent);*/
+                if(start) {
+                    Intent fileActivityIntent = new Intent(ShowFilesActivity.this, FindTreasureActivity.class);
+                    startActivity(fileActivityIntent);
+                }else{
+                    Toast.makeText(this, "Sorry, this map has no treasures!", Toast.LENGTH_SHORT).show();
+                }
             }
             catch (IOException e) {
                 Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
