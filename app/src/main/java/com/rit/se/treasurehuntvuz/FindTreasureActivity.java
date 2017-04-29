@@ -368,6 +368,7 @@ public class FindTreasureActivity extends AppCompatActivity {
             playerDistanceHintsAnimation.start(); // animation resource changed, restart animation.
         }
         playerBearingHintsTextView.setText(bearingHint);
+        playerBearingHintsTextView.setTextSize(28);
     }
 
     private boolean pickUpTreasure() {
