@@ -1,0 +1,7 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false">
+    <item android:drawable="@drawable/anim_blazing_0" android:duration="60"/>
+    <item android:drawable="@drawable/anim_blazing_1" android:duration="60"/>
+    <item android:drawable="@drawable/anim_blazing_2" android:duration="60"/>
+    <item android:drawable="@drawable/anim_blazing_3" android:duration="60"/>
+    <item android:drawable="@drawable/anim_blazing_4" android:duration="60"/>
+</animation-list>

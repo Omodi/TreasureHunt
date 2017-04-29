@@ -1,0 +1,12 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false">
+    <item android:drawable="@drawable/anim_cold_0" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_1" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_2" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_3" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_4" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_5" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_6" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_7" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_8" android:duration="60"/>
+    <item android:drawable="@drawable/anim_cold_9" android:duration="60"/>
+</animation-list>

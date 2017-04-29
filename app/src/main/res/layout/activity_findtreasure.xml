@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.rit.se.treasurehuntvuz.FindTreasureActivity">
 
+    <ImageView
+        android:id="@+id/player_distant_hints_image_view"
+        android:layout_width="238dp"
+        android:layout_height="188dp"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
-        android:id="@+id/player_hints_text_view"
+        android:id="@+id/player_bearing_hints_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"  />
+        android:layout_below="@+id/player_distant_hints_image_view"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/player_coin_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/player_hints_text_view"
+        android:layout_below="@+id/player_bearing_hints_text_view"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
