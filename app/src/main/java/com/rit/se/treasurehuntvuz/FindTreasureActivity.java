@@ -2,12 +2,14 @@ package com.rit.se.treasurehuntvuz;
 
 import android.content.*;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.*;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.Manifest;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 // Jeffrey Haines 3/4/17
@@ -22,6 +24,10 @@ public class FindTreasureActivity extends AppCompatActivity {
     private static final long FIND_TREASURE_THREAD_SLEEP = 1000;
     private static final float TREASURE_FOUND_DISTANCE = 15.0f;
 
+    private TextView playerBearingHintsTextView;
+    private ImageView playerDistanceHintsImageView;
+    private int currentAnimationImageResource;
+    private AnimationDrawable playerDistanceHintsAnimation;
     private Handler handler;
     private FindTreasureRunnable findTreasureRunnable;
     private Thread findTreasureThread;
@@ -100,7 +106,7 @@ public class FindTreasureActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            updatePlayerHints(getString(R.string.gps_waiting_fragment));
+                            updatePlayerHints(-1.0f, -1.0f);
                         }
                     });
                 }
@@ -151,6 +157,13 @@ public class FindTreasureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_findtreasure);
+
+        // setup player hints image and text view
+        playerBearingHintsTextView = (TextView) findViewById(R.id.player_bearing_hints_text_view);
+        playerDistanceHintsImageView = (ImageView) findViewById(R.id.player_distant_hints_image_view);
+        currentAnimationImageResource = R.drawable.anim_gps;
+        playerDistanceHintsImageView.setBackgroundResource(currentAnimationImageResource);
+        playerDistanceHintsAnimation = (AnimationDrawable) playerDistanceHintsImageView.getBackground();
 
         handler = new Handler(getApplicationContext().getMainLooper());
 
@@ -221,6 +234,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         // TODO: Fix application crash when device sleeps. Thread.start() already called.
         Log.v("FindTreasureActivity", "Starting FindTreasureActivity");
         findTreasureThread.start();
+        playerDistanceHintsAnimation.start();
         super.onStart();
     }
 
@@ -230,6 +244,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         updateCoins();
         findTreasureRunnable.onResume();
         startLocationUpdates();
+        playerDistanceHintsAnimation.setVisible(true, false);
         super.onResume();
     }
 
@@ -238,6 +253,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         Log.v("FindTreasureActivity", "Pausing FindTreasureActivity");
         manager.removeUpdates(listener);
         findTreasureRunnable.onPause();
+        playerDistanceHintsAnimation.stop();
         super.onPause();
     }
 
@@ -246,6 +262,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         Log.v("FindTreasureActivity", "Stopping FindTreasureActivity");
         manager.removeUpdates(listener);
         findTreasureRunnable.onFinish();
+        playerDistanceHintsAnimation.stop();
         super.onStop();
     }
 
@@ -254,6 +271,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         Log.v("FindTreasureActivity", "Restarting FindTreasureActivity");
         manager.removeUpdates(listener);
         findTreasureRunnable.onFinish();
+        playerDistanceHintsAnimation.start();
         super.onRestart();
     }
 
@@ -262,6 +280,7 @@ public class FindTreasureActivity extends AppCompatActivity {
         Log.v("FindTreasureActivity", "Destroying FindTreasureActivity");
         manager.removeUpdates(listener);
         findTreasureRunnable.onFinish();
+        playerDistanceHintsAnimation.stop();
         super.onDestroy();
     }
 
@@ -309,43 +328,46 @@ public class FindTreasureActivity extends AppCompatActivity {
     }
 
     private void updatePlayerHints(float distanceToTreasure, float bearingToTreasure) {
-
         Log.v("FindTreasureActivity", String.format("Distance: %f Bearing: %f", distanceToTreasure, bearingToTreasure));
 
-        // set the distance fragment
-        String distanceFragment;
-        if (distanceToTreasure < 30){
-            distanceFragment = "blazing";
-        } else if(distanceToTreasure < 60){
-            distanceFragment = "hot";
-        } else if(distanceToTreasure < 120){
-            distanceFragment = "cold";
-        } else{
-            distanceFragment = "frezzing";
+        int nextAnimationImageResource;
+        String bearingHint = "and getting ";
+
+        if(distanceToTreasure != -1.0f && bearingToTreasure != -1.0f) {
+            // set the distance hint image
+            if (distanceToTreasure < 30) {
+                nextAnimationImageResource = R.drawable.anim_blazing;
+            } else if (distanceToTreasure < 60) {
+                nextAnimationImageResource = R.drawable.anim_hot;
+            } else if (distanceToTreasure < 120) {
+                nextAnimationImageResource = R.drawable.anim_cold;
+            } else {
+                nextAnimationImageResource = R.drawable.anim_freezing;
+            }
+
+            // set the bearing hint string
+            if (bearingToTreasure < 15) {
+                bearingHint += "blazinger";
+            } else if (bearingToTreasure < 30) {
+                bearingHint += "hoter";
+            } else if (bearingToTreasure < 60) {
+                bearingHint += "colder";
+            } else {
+                bearingHint += "frezzinger";
+            }
+        }
+        else {
+            nextAnimationImageResource = R.drawable.anim_gps;
+            bearingHint = "Looking for GPS...";
         }
 
-        // set the bearing fragment
-        String bearingFragment;
-        if (bearingToTreasure < 15){
-            bearingFragment = "blazinger";
-        } else if(bearingToTreasure < 30){
-            bearingFragment = "hoter";
-        } else if(bearingToTreasure < 60){
-            bearingFragment = "colder";
-        } else{
-            bearingFragment = "frezzinger";
+        if(nextAnimationImageResource != currentAnimationImageResource) {
+            currentAnimationImageResource = nextAnimationImageResource;
+            playerDistanceHintsImageView.setBackgroundResource(currentAnimationImageResource);
+            playerDistanceHintsAnimation = (AnimationDrawable) playerDistanceHintsImageView.getBackground();
+            playerDistanceHintsAnimation.start(); // animation resource changed, restart animation.
         }
-
-        // set the player hint text
-        updatePlayerHints(String.format(getString(R.string.player_hints_string),
-                distanceFragment, bearingFragment));
-    }
-
-    private void updatePlayerHints(String playerHint) {
-        // set the player hint text
-        TextView playerHintsTextView = (TextView) findViewById(R.id.player_hints_text_view);
-        playerHintsTextView.setText(playerHint);
-        playerHintsTextView.setTextSize(26);
+        playerBearingHintsTextView.setText(bearingHint);
     }
 
     private boolean pickUpTreasure() {
