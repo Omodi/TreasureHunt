@@ -11,10 +11,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.rit.se.treasurehuntvuz.FileArrayAdapter;
-import com.rit.se.treasurehuntvuz.Option;
-import com.rit.se.treasurehuntvuz.R;
-
 public class FileChooser extends ListActivity {
 
     private File currentDir;
@@ -50,7 +46,7 @@ public class FileChooser extends ListActivity {
         dir.addAll(fls);
         if(!f.getName().equalsIgnoreCase("sdcard"))
             dir.add(0,new Option("..","Parent Directory",f.getParent()));
-        adapter = new FileArrayAdapter(FileChooser.this, R.layout.file_view,dir);
+        adapter = new FileArrayAdapter(FileChooser.this, R.layout.activity_show_files,dir);
         this.setListAdapter(adapter);
     }
     @Override

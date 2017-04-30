@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -50,7 +51,7 @@ public class ShowFilesActivity extends ListActivity {
         this.setTitle("Current Dir: "+f.getName());
         List<Option> dir = new ArrayList<Option>();
         List<Option>fls = new ArrayList<Option>();
-        adapter = new FileArrayAdapter(ShowFilesActivity.this,R.layout.file_view,dir);
+        adapter = new FileArrayAdapter(ShowFilesActivity.this,R.layout.activity_show_files,dir);
         this.setListAdapter(adapter);
 
         try{
