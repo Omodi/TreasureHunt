@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShowFilesActivity extends ListActivity {
+public class ShowFilesActivity extends ListActivity {// do not call, no longer used
 
     private File currentDir;
     private FileArrayAdapter adapter;

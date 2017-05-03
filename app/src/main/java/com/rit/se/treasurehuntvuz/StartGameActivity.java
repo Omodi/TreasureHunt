@@ -2,12 +2,19 @@ package com.rit.se.treasurehuntvuz;
 
 import android.content.Intent;
 import android.location.Location;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class StartGameActivity extends AppCompatActivity {
 
@@ -174,13 +181,52 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void onFileButtonClick(Button fileButton) {
-        try {
+        /*try {
             Intent loadFileIntent = new Intent(StartGameActivity.this, ShowFilesActivity.class);
             startActivity(loadFileIntent);
             finish();
         }
         catch (Exception exception) {
             Log.e("StartGameActivity", exception.getMessage());
+        }*/
+        File dir = Environment.getExternalStorageDirectory().getAbsoluteFile();
+
+        File file = new File(dir,"mylocations.txt");
+        if(file.exists())   // check if file exist
+        {
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String line;
+                Location newLoc;
+                String[] place;
+                boolean start = false;
+                while((line = br.readLine()) != null){
+                    place = line.split(",");
+                    if(place.length == 2) {
+                        newLoc = new Location("");
+                        newLoc.setLongitude(Double.parseDouble(place[0]));
+                        newLoc.setLatitude(Double.parseDouble(place[1]));
+                        TreasuresSingleton.getTreasures().addTreasure(newLoc);
+                        start = true;
+                    }
+                }
+
+                if(start) {
+                    Intent fileActivityIntent = new Intent(StartGameActivity.this, FindTreasureActivity.class);
+                    startActivity(fileActivityIntent);
+                }else{
+                    Toast.makeText(this, "Sorry, this map has no treasures!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (IOException e) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        else
+        {
+            Toast.makeText(this, "Sorry, File doesn't exist!", Toast.LENGTH_SHORT).show();
         }
     }
 }
