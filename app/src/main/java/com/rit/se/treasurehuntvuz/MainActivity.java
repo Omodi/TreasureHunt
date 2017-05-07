@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 onAboutButtonClick((Button) v);
             }
         });
+
     }
 
     @Override
@@ -140,4 +141,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
