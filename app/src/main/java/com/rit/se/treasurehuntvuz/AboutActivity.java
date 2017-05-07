@@ -20,6 +20,7 @@ public class AboutActivity extends AppCompatActivity {
         aboutTextString += "\n\n";
         aboutTextString += getString(R.string.jeffrey_name) + "\n" + getString(R.string.jeffrey_email) + "\n\n";
         aboutTextString += getString(R.string.aziz_name) + "\n" + getString(R.string.aziz_email) + "\n\n";
+        aboutTextString += getString(R.string.colton_name) + "\n" + getString(R.string.colton_email) + "\n\n";
         aboutTextString += getString(R.string.rafael_name) + "\n" + getString(R.string.rafael_email) + "\n\n";
         aboutTextString += getString(R.string.huseen_name) + "\n" + getString(R.string.huseen_email) + "\n\n";
         aboutTextString += getString(R.string.steven_name) + "\n" + getString(R.string.steven_email) + "\n\n";
