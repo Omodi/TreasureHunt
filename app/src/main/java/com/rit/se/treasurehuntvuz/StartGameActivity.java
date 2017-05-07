@@ -181,20 +181,9 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void onFileButtonClick(Button fileButton) {
-        /*try {
-            Intent loadFileIntent = new Intent(StartGameActivity.this, ShowFilesActivity.class);
-            startActivity(loadFileIntent);
-            finish();
-        }
-        catch (Exception exception) {
-            Log.e("StartGameActivity", exception.getMessage());
-        }*/
         File dir = Environment.getExternalStorageDirectory().getAbsoluteFile();
-
         File file = new File(dir,"mylocations.txt");
-        if(file.exists())   // check if file exist
-        {
-
+        if(file.exists()) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
@@ -222,10 +211,8 @@ public class StartGameActivity extends AppCompatActivity {
             catch (IOException e) {
                 Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             }
-
         }
-        else
-        {
+        else {
             Toast.makeText(this, "Sorry, File doesn't exist!", Toast.LENGTH_SHORT).show();
         }
     }

@@ -25,7 +25,6 @@
         <activity android:name=".ShowTreasureActivity" />
         <activity android:name=".EnterHighScoreActivity" />
         <activity android:name=".StartGameActivity" />
-        <activity android:name=".ShowFilesActivity" />
         <activity android:name=".ShowHighScoreActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".SaveGameActivity" />
