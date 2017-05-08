@@ -77,6 +77,7 @@ public class RandomGameActivity extends AppCompatActivity {
                             public void run() {
                                 currentAnimationImageResource = R.drawable.anim_locking_on;
                                 // TODO: Animation doesn't play
+                                randomGameStatusAnimation.stop();
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
                                 randomGameStatusAnimation.start();
                             }
@@ -98,12 +99,13 @@ public class RandomGameActivity extends AppCompatActivity {
                                 manager.removeUpdates(listener);
                                 currentAnimationImageResource = R.drawable.anim_working;
                                 // TODO: Animation doesn't play
+                                randomGameStatusAnimation.stop();
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
                                 randomGameStatusAnimation.start();
                             }
                         });
-                        Log.d("RandomGameThread", "Generating game!");
-                        mRandomGameState = RandomGameState.GENERATING_GAME;
+                        //Log.d("RandomGameThread", "Generating game!");
+                        //mRandomGameState = RandomGameState.GENERATING_GAME;
                         break;
                     case GENERATING_GAME:
                         handler.post(new Runnable() {
@@ -247,7 +249,7 @@ public class RandomGameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         // TODO: Fix application crash when device sleeps. Thread.start() already called.
-        Log.v("RandomGameActivity", "Starting FindTreasureActivity");
+        Log.v("RandomGameActivity", "Starting RandomGameActivity");
         randomGameThread.start();
         randomGameStatusAnimation.start();
         super.onStart();
@@ -255,7 +257,7 @@ public class RandomGameActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.v("RandomGameActivity", "Resuming FindTreasureActivity");
+        Log.v("RandomGameActivity", "Resuming RandomGameActivity");
         randomGameRunnable.onResume();
         startLocationUpdates();
         randomGameStatusAnimation.setVisible(true, false);
@@ -273,7 +275,7 @@ public class RandomGameActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        Log.v("RandomGameActivity", "Stopping FindTreasureActivity");
+        Log.v("RandomGameActivity", "Stopping RandomGameActivity");
         manager.removeUpdates(listener);
         randomGameRunnable.onFinish();
         randomGameStatusAnimation.stop();
@@ -282,7 +284,7 @@ public class RandomGameActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        Log.v("RandomGameActivity", "Restarting FindTreasureActivity");
+        Log.v("RandomGameActivity", "Restarting RandomGameActivity");
         manager.removeUpdates(listener);
         randomGameRunnable.onFinish();
         randomGameStatusAnimation.start();
@@ -291,7 +293,7 @@ public class RandomGameActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.v("RandomGameActivity", "Destroying FindTreasureActivity");
+        Log.v("RandomGameActivity", "Destroying RandomGameActivity");
         manager.removeUpdates(listener);
         randomGameRunnable.onFinish();
         randomGameStatusAnimation.stop();
