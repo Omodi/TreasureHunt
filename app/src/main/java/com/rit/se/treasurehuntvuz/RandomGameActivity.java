@@ -112,13 +112,13 @@ public class RandomGameActivity extends AppCompatActivity {
                             public void run() {
                                 // generate random treasures
                                 for(int i = 0; i < RAND_GAME_TREASURES; i++) {
-                                    Log.v("RandomGameThread",
+                                    Log.d("RandomGameThread",
                                             String.format("Treasure b #%1$d: lat: %2$f lon: %3$f",
                                                     i, mPlayerLocation.getLatitude(), mPlayerLocation.getLongitude()));
                                     Location tmpLocation = new Location("");
                                     tmpLocation.setLatitude(getDistanceOffsetLatitude(mPlayerLocation.getLatitude()));
                                     tmpLocation.setLongitude(getDistanceOffsetLongitude(mPlayerLocation.getLongitude()));
-                                    Log.v("RandomGameThread",
+                                    Log.d("RandomGameThread",
                                             String.format("Treasure a #%1$d: lat: %2$f lon: %3$f",
                                                     i, tmpLocation.getLatitude(), tmpLocation.getLongitude()));
                                     TreasuresSingleton.getTreasures().addTreasure(tmpLocation);
