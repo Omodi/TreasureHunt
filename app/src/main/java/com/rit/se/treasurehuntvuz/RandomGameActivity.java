@@ -76,6 +76,7 @@ public class RandomGameActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 currentAnimationImageResource = R.drawable.anim_locking_on;
+                                // TODO: Animation doesn't play
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
                                 randomGameStatusAnimation.start();
                             }
@@ -96,6 +97,7 @@ public class RandomGameActivity extends AppCompatActivity {
                             public void run() {
                                 manager.removeUpdates(listener);
                                 currentAnimationImageResource = R.drawable.anim_working;
+                                // TODO: Animation doesn't play
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
                                 randomGameStatusAnimation.start();
                             }
@@ -352,7 +354,7 @@ public class RandomGameActivity extends AppCompatActivity {
             startActivity(findTreasureIntent);
             randomGameRunnable.onFinish();
             finish();
-            Log.d("RandomGameActivity", "Going to ShowTreasureActivity");
+            Log.d("RandomGameActivity", "Going to FindTreasureActivity");
         } catch(Exception exception) {
             if(exception.getMessage() != null) {
                 Log.e("RandomGameActivity", exception.getMessage());
