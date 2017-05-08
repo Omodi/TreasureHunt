@@ -136,40 +136,9 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void onRandomButtonClick(Button randomButton) {
         try {
-            Location locOne = new Location("");
-            locOne.setLongitude(-77.67939627170563);
-            locOne.setLatitude(43.08380184956601);
-            TreasuresSingleton.getTreasures().addTreasure(locOne);
-
-            Location locTwo = new Location("");
-            locTwo.setLongitude(-77.67941772937775);
-            locTwo.setLatitude(43.08283019478308);
-            TreasuresSingleton.getTreasures().addTreasure(locTwo);
-
-            // TODO: Make this a treasure near your location
-            Location locThree = new Location("");
-            locThree.setLongitude(-77.6807427406311);
-            locThree.setLatitude(43.08287782287796);
-            TreasuresSingleton.getTreasures().addTreasure(locThree);
-
-            Location locFour = new Location("");
-            locThree.setLongitude(-77.65496134757996);
-            locThree.setLatitude(43.08483801131958);
-            TreasuresSingleton.getTreasures().addTreasure(locFour);
-
-            Location locFive = new Location("");
-            locThree.setLongitude(-77.65521347522736);
-            locThree.setLatitude(43.08410940643749);
-            TreasuresSingleton.getTreasures().addTreasure(locFive);
-
-            Location locSix = new Location("");
-            locThree.setLongitude(-77.65601813793182);
-            locThree.setLatitude(43.084123731301915);
-            TreasuresSingleton.getTreasures().addTreasure(locSix);
-
-            Intent randomActivityIntent = new Intent(StartGameActivity.this, FindTreasureActivity.class);
-            startActivity(randomActivityIntent);
-            Log.d("StartGameActivity", "Going to FindTreasureActivity");
+            Intent randomGameActivityIntent = new Intent(StartGameActivity.this, RandomGameActivity.class);
+            startActivity(randomGameActivityIntent);
+            Log.d("StartGameActivity", "Going to RandomGameActivity");
             finish();
         } catch (Exception exception) {
             if(exception.getMessage() != null) {
@@ -181,6 +150,7 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void onFileButtonClick(Button fileButton) {
+        // TODO: Move this to another activity
         File dir = Environment.getExternalStorageDirectory().getAbsoluteFile();
         File file = new File(dir,"mylocations.txt");
         if(file.exists()) {

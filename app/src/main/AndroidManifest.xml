@@ -28,6 +28,7 @@
         <activity android:name=".ShowHighScoreActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".SaveGameActivity" />
+        <activity android:name=".RandomGameActivity"></activity>
     </application>
 
 </manifest>
