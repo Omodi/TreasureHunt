@@ -84,9 +84,11 @@ public class RandomGameActivity extends AppCompatActivity {
                         });
                         // fall through
                     case IMPROVING_LOCATION:
-                        if(mLocationUpdated && mLocationUpdateCount < LOCATION_COUNT_UPDATE_MAX) {
+                        if(mLocationUpdated) {
                             mLocationUpdated = false;
                             mLocationUpdateCount++;
+                        }
+                        if(mLocationUpdateCount != LOCATION_COUNT_UPDATE_MAX) {
                             break;
                         }
                         Log.d("RandomGameThread", "Location locked on!");
