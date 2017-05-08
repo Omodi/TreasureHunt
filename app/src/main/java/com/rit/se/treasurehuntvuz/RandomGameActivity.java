@@ -104,8 +104,8 @@ public class RandomGameActivity extends AppCompatActivity {
                                 randomGameStatusAnimation.start();
                             }
                         });
-                        //Log.d("RandomGameThread", "Generating game!");
-                        //mRandomGameState = RandomGameState.GENERATING_GAME;
+                        Log.d("RandomGameThread", "Generating game!");
+                        mRandomGameState = RandomGameState.GENERATING_GAME;
                         break;
                     case GENERATING_GAME:
                         handler.post(new Runnable() {
