@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import java.util.Random;
 
 public class RandomGameActivity extends AppCompatActivity {
     // configuration
@@ -111,11 +112,14 @@ public class RandomGameActivity extends AppCompatActivity {
                             public void run() {
                                 // generate random treasures
                                 for(int i = 0; i < RAND_GAME_TREASURES; i++) {
+                                    Log.v("RandomGameThread",
+                                            String.format("Treasure b #%1$d: lat: %2$f lon: %3$f",
+                                                    i, mPlayerLocation.getLatitude(), mPlayerLocation.getLongitude()));
                                     Location tmpLocation = new Location("");
                                     tmpLocation.setLatitude(getDistanceOffsetLatitude(mPlayerLocation.getLatitude()));
                                     tmpLocation.setLongitude(getDistanceOffsetLongitude(mPlayerLocation.getLongitude()));
                                     Log.v("RandomGameThread",
-                                            String.format("Treasure #%1$d: lat: %2$f lon: %3$f",
+                                            String.format("Treasure a #%1$d: lat: %2$f lon: %3$f",
                                                     i, tmpLocation.getLatitude(), tmpLocation.getLongitude()));
                                     TreasuresSingleton.getTreasures().addTreasure(tmpLocation);
                                 }
@@ -316,19 +320,27 @@ public class RandomGameActivity extends AppCompatActivity {
     }
 
     private final int RADIUS_EARTH = 6378137;
-    private final int BASE_OFFSET_METERS = 5;
+    private final int BASE_OFFSET_METERS = 50;
     private final int MAX_OFFSET_METERS = 30;
+    private final int MAX_VARIABLE_OFFSET_METERS = 100;
+    private final int MIN_VARIABLE_OFFSET_METERS = 20;
+    private Random random = new Random();
 
     // TODO: improve treasure generation by adding some random distance
     private double getDistanceOffsetLatitude(double latitude) {
+        int number = random.nextInt(MAX_VARIABLE_OFFSET_METERS + 1 -MIN_VARIABLE_OFFSET_METERS) + MIN_VARIABLE_OFFSET_METERS;
+
         // latitude + base_offset + random_distance
-        return latitude + BASE_OFFSET_METERS * 100 / Math.PI;
+        return latitude + BASE_OFFSET_METERS * 100 / Math.PI + number * 100 / Math.PI;
     }
 
     // TODO: improve treasure generation by adding some random distance
     private double getDistanceOffsetLongitude(double longitude) {
+        int number = random.nextInt(MAX_VARIABLE_OFFSET_METERS + 1 -MIN_VARIABLE_OFFSET_METERS) + MIN_VARIABLE_OFFSET_METERS;
+
         // latitude + base_offset + random_distance
-        return longitude + BASE_OFFSET_METERS / (RADIUS_EARTH * Math.cos(Math.PI * longitude / 180));
+        return longitude + BASE_OFFSET_METERS / (RADIUS_EARTH * Math.cos(Math.PI * longitude / 180))
+                                            + number / (RADIUS_EARTH * Math.cos(Math.PI * longitude / 180));
     }
 
     private boolean startLocationUpdates() {
