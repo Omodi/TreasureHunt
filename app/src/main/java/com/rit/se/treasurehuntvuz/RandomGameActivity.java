@@ -76,9 +76,8 @@ public class RandomGameActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 currentAnimationImageResource = R.drawable.anim_locking_on;
-                                // TODO: Animation doesn't play
-                                randomGameStatusAnimation.stop();
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
+                                randomGameStatusAnimation = (AnimationDrawable) randomGameStatusImageView.getBackground();
                                 randomGameStatusAnimation.start();
                             }
                         });
@@ -98,9 +97,8 @@ public class RandomGameActivity extends AppCompatActivity {
                             public void run() {
                                 manager.removeUpdates(listener);
                                 currentAnimationImageResource = R.drawable.anim_working;
-                                // TODO: Animation doesn't play
-                                randomGameStatusAnimation.stop();
                                 randomGameStatusImageView.setBackgroundResource(currentAnimationImageResource);
+                                randomGameStatusAnimation = (AnimationDrawable) randomGameStatusImageView.getBackground();
                                 randomGameStatusAnimation.start();
                             }
                         });
